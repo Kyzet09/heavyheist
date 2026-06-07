@@ -9,7 +9,6 @@ var time_spent_in_level: float = 0.0
 var spawn_pos=Vector2(228,452)
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	player.set_current_room(tuto_room)
 	player.position=spawn_pos
 	await get_tree().create_timer(5.0).timeout
 	text_canva.visible = false

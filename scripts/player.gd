@@ -1,19 +1,16 @@
 extends CharacterBody2D
 @export var speed : float = 10000
 @onready var virtual_joystick: VirtualJoystick = $"../joystick_canva/Virtual Joystick"
-@onready var modifiers: TileMapLayer
+@onready var modifiers: TileMapLayer = $"../modifiers"
 @onready var tuto: Node2D = $".."
 @onready var text_canva: CanvasLayer = $"../text_canva"
-@onready var script_tuto: RichTextLabel = $"../text_canva/script_tuto"
+@onready var dialog: RichTextLabel = $"../text_canva/dialog"
+
 
 var move_vector := Vector2.ZERO
 var collected_coins : int = 0
 var collected_keys : int = 0
 var has_sword : bool = false
-
-func set_current_room(room: Node2D):
-	modifiers= room.get_node("modifiers")
-
 
 func _process(delta: float) -> void:
 	if virtual_joystick and virtual_joystick.is_pressed:
@@ -28,7 +25,7 @@ func _process(delta: float) -> void:
 
 func get_tile_under_player():
 	# Convertit la position du personnage en coordonnées de cellule
-	var cell = modifiers.local_to_map(modifiers.to_local(global_position))
+	var cell = modifiers.local_to_map(global_position)
 	# Récupère les données de la tile à cette cellule
 	var tile_data = modifiers.get_cell_tile_data(cell)
 	if tile_data:
@@ -38,7 +35,7 @@ func get_tile_under_player():
 		if type=="coin":
 			modifiers.set_cell(cell,-1)
 			if collected_coins==0:
-				dialog("[font_size=32][i]Voice in you head [/i] \nCOINS! I love coins!")
+				set_dialog("[font_size=32][i]Voice in you head [/i] \nCOINS! I love coins!")
 			collected_coins+=1
 			print("coins: ",collected_coins)
 		if type=="key":
@@ -56,9 +53,9 @@ func get_tile_under_player():
 			print("coins: ",collected_coins)
 			print("keys: ",collected_keys)
 		if type=="pot" and not has_sword:
-			dialog("[font_size=32][i]Voice in you head [/i] \nI need something to break it...")
+			set_dialog("[font_size=32][i]Voice in you head [/i] \nI need something to break it...")
 		if type=="heart":
-			dialog("[font_size=32][i]Voice in you head [/i] \nFinally! FREE!!!")
+			set_dialog("[font_size=32][i]Voice in you head [/i] \nFinally! FREE!!!")
 			await get_tree().create_timer(2.0).timeout
 			Global.collected_coins = collected_coins
 			Global.time_spent=tuto.formater_temps()
@@ -80,10 +77,10 @@ func open_doors():
 					collected_keys-=1
 					collider.set_cell(tile_pos, 0,Vector2i(9,0))  # open door
 				elif tile_type =="door" and collected_keys<=0:
-					dialog("[font_size=32][i]Voice in you head [/i] \nI need a key to open this door...")
+					set_dialog("[font_size=32][i]Voice in you head [/i] \nI need a key to open this door...")
 
-func dialog(text):
-	script_tuto.text=text
+func set_dialog(text):
+	dialog.text=text
 	text_canva.visible = true
 	await get_tree().create_timer(2.0).timeout
 	text_canva.visible = false
