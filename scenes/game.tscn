@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_uwrxv"]
 [ext_resource type="PackedScene" uid="uid://c8etw16d58le2" path="res://scenes/player.tscn" id="3_lnu2h"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eryin"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ybwc5"]
 texture = ExtResource("1_gisvb")
 use_texture_padding = false
 0:0/0 = 0
@@ -430,9 +430,9 @@ use_texture_padding = false
 
 [sub_resource type="TileSet" id="TileSet_acwno"]
 physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_eryin")
+sources/0 = SubResource("TileSetAtlasSource_ybwc5")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ybu53"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_adnqb"]
 texture = ExtResource("1_gisvb")
 6:1/animation_columns = 2
 6:1/animation_frame_0/duration = 1.0
@@ -492,7 +492,7 @@ texture = ExtResource("1_gisvb")
 [sub_resource type="TileSet" id="TileSet_li6uv"]
 custom_data_layer_0/name = "type"
 custom_data_layer_0/type = 4
-sources/0 = SubResource("TileSetAtlasSource_ybu53")
+sources/0 = SubResource("TileSetAtlasSource_adnqb")
 
 [node name="game" type="Node2D"]
 
@@ -510,7 +510,7 @@ tile_set = SubResource("TileSet_li6uv")
 anchors_preset = 12
 anchor_right = 1.0
 offset_left = -1.0
-offset_top = -527.0
+offset_top = -1069.0
 offset_right = -67.0
 offset_bottom = -109.0
 grow_horizontal = 2
