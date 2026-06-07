@@ -321,3 +321,5 @@ horizontal_alignment = 1
 [node name="Button_play" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Play"
+
+[connection signal="pressed" from="VBoxContainer/Button_play" to="." method="_on_button_play_pressed"]
