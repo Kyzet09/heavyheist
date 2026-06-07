@@ -329,3 +329,5 @@ layout_mode = 2
 [node name="Button_stash" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Go to the stash"
+
+[connection signal="pressed" from="VBoxContainer/Button_stash" to="." method="_on_button_stash_pressed"]

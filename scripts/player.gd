@@ -1,7 +1,7 @@
 extends CharacterBody2D
 @export var speed : float = 10000
 @onready var virtual_joystick: VirtualJoystick = $"../joystick_canva/Virtual Joystick"
-@onready var modifiers: TileMapLayer = $"../modifiers"
+@onready var modifiers: TileMapLayer
 @onready var tuto: Node2D = $".."
 @onready var text_canva: CanvasLayer = $"../text_canva"
 @onready var script_tuto: RichTextLabel = $"../text_canva/script_tuto"
@@ -10,9 +10,10 @@ var move_vector := Vector2.ZERO
 var collected_coins : int = 0
 var collected_keys : int = 0
 var has_sword : bool = false
-#func _ready() -> void:
-	
-	
+
+func set_current_room(room: Node2D):
+	modifiers= room.get_node("modifiers")
+
 
 func _process(delta: float) -> void:
 	if virtual_joystick and virtual_joystick.is_pressed:

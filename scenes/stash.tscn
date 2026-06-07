@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=3 uid="uid://bq1hu1p4jpfti"]
+
+[ext_resource type="Script" path="res://scripts/stash.gd" id="1_alfyd"]
+[ext_resource type="Texture2D" uid="uid://b8jo85mp8kp7x" path="res://assets/coin.png" id="2_bidn4"]
+
+[node name="stash" type="Node2D"]
+script = ExtResource("1_alfyd")
+
+[node name="coins" type="Label" parent="."]
+offset_left = 983.0
+offset_top = -2.0
+offset_right = 1199.0
+offset_bottom = 67.0
+theme_override_font_sizes/font_size = 50
+text = "0"
+
+[node name="coin_sprite" type="Sprite2D" parent="."]
+position = Vector2(952, 34)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_bidn4")
+
+[node name="new_game" type="Button" parent="."]
+offset_left = 715.0
+offset_top = 1835.0
+offset_right = 1167.0
+offset_bottom = 1956.0
+theme_override_font_sizes/font_size = 40
+text = "New game"
+
+[node name="charge_label" type="Label" parent="."]
+offset_left = 113.0
+offset_top = 385.0
+offset_right = 233.0
+offset_bottom = 434.0
+theme_override_font_sizes/font_size = 30
+text = "Charge"
+
+[node name="charge" type="Label" parent="charge_label"]
+offset_left = 123.0
+offset_top = 2.0
+offset_right = 163.0
+offset_bottom = 44.0
+theme_override_font_sizes/font_size = 30
+text = "20"
+
+[node name="buy_charge" type="Button" parent="charge_label"]
+offset_left = 199.0
+offset_top = 1.0
+offset_right = 347.0
+offset_bottom = 50.0
+text = "Level up (10)"
+
+[connection signal="pressed" from="new_game" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="charge_label/buy_charge" to="." method="_on_buy_charge_pressed"]

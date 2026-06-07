@@ -11,6 +11,9 @@ func _ready() -> void:
 	time_recap.text="Time spent: "+ str(Global.time_spent)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+
+
+func _on_button_stash_pressed() -> void:
+	Global.total_coins+=Global.collected_coins
+	Global.collected_coins=0
+	get_tree().change_scene_to_file("res://scenes/stash.tscn")
