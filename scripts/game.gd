@@ -1,7 +1,6 @@
 extends Node2D
 @onready var player: CharacterBody2D = $player
 @onready var text_canva: CanvasLayer = $text_canva
-@onready var room_2: Node2D = $room2
 @onready var map: TileMapLayer = $map
 @onready var modifiers: TileMapLayer = $modifiers
 

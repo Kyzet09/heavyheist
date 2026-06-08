@@ -1,5 +1,6 @@
 extends CharacterBody2D
-@export var speed : float = 10000
+@export var speed : float = 5000
+@onready var sprite = $sprite
 @onready var virtual_joystick: VirtualJoystick = $"../joystick_canva/Virtual Joystick"
 @onready var modifiers: TileMapLayer = $"../modifiers"
 @onready var tuto: Node2D = $".."
@@ -11,10 +12,14 @@ var move_vector := Vector2.ZERO
 var collected_coins : int = 0
 var collected_keys : int = 0
 var has_sword : bool = false
+var charge : int = 20 # a changer en fonction du stash
+
+func _ready() -> void:
+	update_backpack()
 
 func _process(delta: float) -> void:
 	if virtual_joystick and virtual_joystick.is_pressed:
-		rotation = virtual_joystick.output.angle() - deg_to_rad(90)
+		rotation = virtual_joystick.output.angle() + deg_to_rad(90)
 	## Movement using Input functions:
 	move_vector = Vector2.ZERO
 	move_vector = Input.get_vector("ui_left","ui_right","ui_up","ui_down")
@@ -37,6 +42,7 @@ func get_tile_under_player():
 			if collected_coins==0:
 				set_dialog("[font_size=32][i]Voice in you head [/i] \nCOINS! I love coins!")
 			collected_coins+=1
+			update_backpack()
 			print("coins: ",collected_coins)
 		if type=="key":
 			collected_keys+=1
@@ -50,6 +56,7 @@ func get_tile_under_player():
 			modifiers.set_cell(cell,0,Vector2i(15,0))
 			collected_coins+=2
 			collected_keys+=1
+			update_backpack()
 			print("coins: ",collected_coins)
 			print("keys: ",collected_keys)
 		if type=="pot" and not has_sword:
@@ -84,4 +91,17 @@ func set_dialog(text):
 	text_canva.visible = true
 	await get_tree().create_timer(2.0).timeout
 	text_canva.visible = false
-	
+
+
+func update_backpack():
+	print("half capacity" + str(int(charge/2)))
+	if collected_coins < int(charge/2):
+		sprite.frame = 0
+		speed = 7500
+	elif collected_coins < charge:
+		sprite.frame = 1
+		speed = 5000
+	else:
+		sprite.frame = 2
+		speed = 2500
+		
