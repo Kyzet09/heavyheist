@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=4 uid="uid://cj0pryjf1ly6x"]
+[gd_scene load_steps=10 format=4 uid="uid://cj0pryjf1ly6x"]
 
 [ext_resource type="Texture2D" uid="uid://bhyc37xxswha7" path="res://assets/tileset_full.png" id="1_gisvb"]
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_o10yf"]
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_uwrxv"]
 [ext_resource type="PackedScene" uid="uid://c8etw16d58le2" path="res://scenes/player.tscn" id="3_lnu2h"]
+[ext_resource type="Texture2D" uid="uid://dfu6o44dti7tg" path="res://assets/key.png" id="5_gicb3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2c7pf"]
 texture = ExtResource("1_gisvb")
@@ -551,3 +552,17 @@ offset_right = 1200.0
 grow_vertical = 0
 bbcode_enabled = true
 metadata/_edit_use_anchors_ = true
+
+[node name="keys_label" type="Label" parent="text_canva"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -142.0
+offset_bottom = 69.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 50
+text = "0"
+
+[node name="Sprite2D" type="Sprite2D" parent="text_canva"]
+position = Vector2(1005, 40)
+texture = ExtResource("5_gicb3")

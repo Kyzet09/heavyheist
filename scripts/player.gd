@@ -7,6 +7,7 @@ extends CharacterBody2D
 @onready var text_canva: CanvasLayer = $"../text_canva"
 @onready var dialog: RichTextLabel = $"../text_canva/dialog"
 @onready var game: Node2D = $".."
+@onready var keys_label: Label = $"../text_canva/keys_label"
 
 
 var move_vector := Vector2.ZERO
@@ -48,6 +49,7 @@ func get_tile_under_player():
 			print("coins: ",collected_coins)
 		if type=="key":
 			collected_keys+=1
+			keys_label.text=str(collected_keys)
 			modifiers.set_cell(cell,-1)
 			print("keys: ",collected_keys)
 		if type=="sword":
@@ -58,6 +60,7 @@ func get_tile_under_player():
 			modifiers.set_cell(cell,0,Vector2i(15,0))
 			collected_coins+=2
 			collected_keys+=1
+			keys_label.text=str(collected_keys)
 			update_backpack()
 			print("coins: ",collected_coins)
 			print("keys: ",collected_keys)
@@ -84,6 +87,7 @@ func open_doors():
 				var tile_type=tile_data.get_custom_data("type")
 				if tile_type =="door" and collected_keys>0:
 					collected_keys-=1
+					keys_label.text=str(collected_keys)
 					if (tile_data.get_custom_data("door_type")=="outside"):
 						game.generate_room(tile_pos+Vector2i(-6,-11))
 					collider.set_cell(tile_pos, 0,Vector2i(9,0))  # open door
@@ -92,9 +96,9 @@ func open_doors():
 
 func set_dialog(text):
 	dialog.text=text
-	text_canva.visible = true
+	dialog.visible = true
 	await get_tree().create_timer(2.0).timeout
-	text_canva.visible = false
+	dialog.visible = false
 
 
 func update_backpack():
