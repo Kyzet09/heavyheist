@@ -322,4 +322,9 @@ horizontal_alignment = 1
 layout_mode = 2
 text = "Play"
 
+[node name="Button_skip_tuto" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Skip Tutorial"
+
 [connection signal="pressed" from="VBoxContainer/Button_play" to="." method="_on_button_play_pressed"]
+[connection signal="pressed" from="VBoxContainer/Button_skip_tuto" to="." method="_on_button_skip_tuto_pressed"]
