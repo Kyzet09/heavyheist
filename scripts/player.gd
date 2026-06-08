@@ -6,6 +6,7 @@ extends CharacterBody2D
 @onready var tuto: Node2D = $".."
 @onready var text_canva: CanvasLayer = $"../text_canva"
 @onready var dialog: RichTextLabel = $"../text_canva/dialog"
+@onready var game: Node2D = $".."
 
 
 var move_vector := Vector2.ZERO
@@ -16,6 +17,7 @@ var charge : int = 20 # a changer en fonction du stash
 
 func _ready() -> void:
 	update_backpack()
+
 
 func _process(delta: float) -> void:
 	if virtual_joystick and virtual_joystick.is_pressed:
@@ -82,6 +84,8 @@ func open_doors():
 				var tile_type=tile_data.get_custom_data("type")
 				if tile_type =="door" and collected_keys>0:
 					collected_keys-=1
+					if (tile_data.get_custom_data("door_type")=="outside"):
+						game.generate_room(tile_pos+Vector2i(-6,-11))
 					collider.set_cell(tile_pos, 0,Vector2i(9,0))  # open door
 				elif tile_type =="door" and collected_keys<=0:
 					set_dialog("[font_size=32][i]Voice in you head [/i] \nI need a key to open this door...")

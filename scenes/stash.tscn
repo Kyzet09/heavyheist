@@ -36,6 +36,7 @@ theme_override_font_sizes/font_size = 30
 text = "Charge"
 
 [node name="charge" type="Label" parent="charge_label"]
+layout_mode = 0
 offset_left = 123.0
 offset_top = 2.0
 offset_right = 163.0
@@ -44,6 +45,7 @@ theme_override_font_sizes/font_size = 30
 text = "20"
 
 [node name="buy_charge" type="Button" parent="charge_label"]
+layout_mode = 0
 offset_left = 199.0
 offset_top = 1.0
 offset_right = 347.0
