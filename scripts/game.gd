@@ -11,7 +11,7 @@ var spawn_pos=Vector2i(100,100)
 var loot_spawnpoints={0:[{"xmin":1,"xmax":11,"ymin":1,"ymax":10}]}
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	generate_loot(0,3)
+	generate_loot(0)
 	player.position=spawn_pos
 	
 
@@ -31,6 +31,7 @@ func generate_room(room_pos: Vector2i) -> void:
 	var room_scene = load("res://scenes/room_"+str(random)+".tscn")
 	var room = room_scene.instantiate()
 	copy_room(room,room_pos)
+	generate_loot(random,room_pos)
 
 func copy_room(room: Node, offset: Vector2i = Vector2i.ZERO):
 	copy_tilemaplayer(room.get_node("map"), map, offset)
@@ -44,8 +45,30 @@ func copy_tilemaplayer(source: TileMapLayer, target: TileMapLayer, offset: Vecto
 			source.get_cell_atlas_coords(cell)
 		)
 
-func generate_loot(room : int,nb_item : int):
-	for i in range(nb_item):
-		var loot_pos=Vector2i(randi_range(loot_spawnpoints[0][0]["xmin"],loot_spawnpoints[0][0]["xmax"]),randi_range(loot_spawnpoints[0][0]["ymin"],loot_spawnpoints[0][0]["ymax"]))
-		modifiers.set_cell(loot_pos,0,Vector2i(13,3))
+func generate_loot(room : int,room_pos: Vector2i = Vector2i.ZERO):
+	if room==0:
+		for i in range(3): # a equilibrer
+			var loot_pos=Vector2i(randi_range(loot_spawnpoints[0][0]["xmin"],loot_spawnpoints[0][0]["xmax"]),randi_range(loot_spawnpoints[0][0]["ymin"],loot_spawnpoints[0][0]["ymax"]))
+			modifiers.set_cell(loot_pos,0,Vector2i(13,3))
+	elif room==1:
+		for i in range(4): # generation de pieces a equilibrer
+			var loot_pos=Vector2i(randi_range(3,9),randi_range(3,7))
+			modifiers.set_cell(loot_pos+room_pos,0,Vector2i(13,0))
+		for i in range(2): # generation de pot a equilibrer
+			var loot_pos=Vector2i(randi_range(3,9),randi_range(3,7))
+			modifiers.set_cell(loot_pos+room_pos,0,Vector2i(14,0))
+	elif room==2:
+		for i in range(1): # generation de clé a equilibrer
+			var loot_pos=Vector2i(randi_range(1,2),randi_range(8,10))
+			modifiers.set_cell(loot_pos+room_pos,0,Vector2i(13,3))
+		for i in range(2): # generation de piece a equilibrer
+			var loot_pos=Vector2i(randi_range(1,2),randi_range(8,10))
+			modifiers.set_cell(loot_pos+room_pos,0,Vector2i(13,0))
+	elif room==3:
+		for i in range(1): # generation de clé a equilibrer
+			var loot_pos=Vector2i(randi_range(1,2),randi_range(1,10))
+			modifiers.set_cell(loot_pos+room_pos,0,Vector2i(13,3))
+		for i in range(8): # generation de piece a equilibrer
+			var loot_pos=Vector2i(randi_range (8,11),randi_range(1,6))
+			modifiers.set_cell(loot_pos+room_pos,0,Vector2i(13,0))
 	
