@@ -8,6 +8,7 @@ extends CharacterBody2D
 @onready var dialog: RichTextLabel = $"../text_canva/dialog"
 @onready var game: Node2D = $".."
 @onready var keys_label: Label = $"../text_canva/keys_label"
+@onready var map: TileMapLayer = $"../map"
 
 
 var move_vector := Vector2.ZERO
@@ -38,8 +39,6 @@ func get_tile_under_player():
 	var tile_data = modifiers.get_cell_tile_data(cell)
 	if tile_data:
 		var type = tile_data.get_custom_data("type")
-		if type=="trap":
-			position=tuto.spawn_pos
 		if type=="coin":
 			modifiers.set_cell(cell,-1)
 			if collected_coins==0:
@@ -58,20 +57,38 @@ func get_tile_under_player():
 			print("sword: ",has_sword)
 		if type=="pot" and has_sword:
 			modifiers.set_cell(cell,0,Vector2i(15,0))
-			collected_coins+=2
-			collected_keys+=1
+			collected_coins+=randi_range(1,3)
+			collected_keys+=randi_range(0,1) # 1/2 chance d'avoir une clé
 			keys_label.text=str(collected_keys)
 			update_backpack()
 			print("coins: ",collected_coins)
 			print("keys: ",collected_keys)
+
 		if type=="pot" and not has_sword:
 			set_dialog("[font_size=32][i]Voice in you head [/i] \nI need something to break it...")
+
 		if type=="heart":
 			set_dialog("[font_size=32][i]Voice in you head [/i] \nFinally! FREE!!!")
 			await get_tree().create_timer(2.0).timeout
 			Global.collected_coins = collected_coins
 			Global.time_spent=tuto.formater_temps()
 			get_tree().change_scene_to_file("res://scenes/level_end.tscn")
+			
+		if type=="stairs" and tile_data.get_custom_data("sub_type")=="up":
+			game.current_floor+=1
+			var tp_cell=cell+Vector2i(99,-1)
+			if (map.get_cell_source_id(tp_cell) == -1):
+				game.generate_room(tp_cell,1,2)
+			position = modifiers.map_to_local(tp_cell+Vector2i(3,1))
+
+				
+		if type=="stairs" and tile_data.get_custom_data("sub_type")=="down":
+			game.current_floor-=1
+			var tp_cell=cell-Vector2i(101,1)
+			if (map.get_cell_source_id(tp_cell) == -1):
+				game.generate_room(tp_cell,0,2)
+			position = modifiers.map_to_local(tp_cell+Vector2i(3,1))
+
 			
 
 func open_doors():
@@ -88,11 +105,15 @@ func open_doors():
 				if tile_type =="door" and collected_keys>0:
 					collected_keys-=1
 					keys_label.text=str(collected_keys)
-					if (tile_data.get_custom_data("door_type")=="outside"):
+					if (tile_data.get_custom_data("sub_type")=="top"):
 						game.generate_room(tile_pos+Vector2i(-6,-11))
+					if (tile_data.get_custom_data("sub_type")=="bottom"):
+						game.generate_room(tile_pos+Vector2i(-6,0))
 					collider.set_cell(tile_pos, 0,Vector2i(9,0))  # open door
 				elif tile_type =="door" and collected_keys<=0:
 					set_dialog("[font_size=32][i]Voice in you head [/i] \nI need a key to open this door...")
+				elif tile_type =="trap":
+					position=game.spawn_pos
 
 func set_dialog(text):
 	dialog.text=text
