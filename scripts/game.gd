@@ -66,10 +66,10 @@ func generate_loot(floor:int, room : int,room_pos: Vector2i = Vector2i.ZERO):
 				var loot_pos=Vector2i(randi_range(loot_spawnpoints[0][0]["xmin"],loot_spawnpoints[0][0]["xmax"]),randi_range(loot_spawnpoints[0][0]["ymin"],loot_spawnpoints[0][0]["ymax"]))
 				modifiers.set_cell(loot_pos,0,Vector2i(13,3))
 		elif room==1:
-			for i in range(4): # generation de pieces a equilibrer
+			for i in range(randi_range(1,4)): # generation de pieces a equilibrer
 				var loot_pos=Vector2i(randi_range(3,9),randi_range(3,7))
 				modifiers.set_cell(loot_pos+room_pos,0,Vector2i(13,0))
-			for i in range(2): # generation de pot a equilibrer
+			for i in range(randi_range(1,2)): # generation de pot a equilibrer
 				var loot_pos=Vector2i(randi_range(3,9),randi_range(3,7))
 				modifiers.set_cell(loot_pos+room_pos,0,Vector2i(14,0))
 		elif room==2:
@@ -85,31 +85,34 @@ func generate_loot(floor:int, room : int,room_pos: Vector2i = Vector2i.ZERO):
 			for i in range(1): # generation de clé a equilibrer
 				var loot_pos=Vector2i(randi_range(1,2),randi_range(1,10))
 				modifiers.set_cell(loot_pos+room_pos,0,Vector2i(13,3))
-			for i in range(8): # generation de piece a equilibrer
+			for i in range(randi_range(1,3)): # generation de piece a equilibrer
 				var loot_pos=Vector2i(randi_range (8,11),randi_range(1,6))
 				modifiers.set_cell(loot_pos+room_pos,0,Vector2i(13,0))
 
 	if floor==1:
 		if room==1:
-			for i in range(4): # generation de pieces a equilibrer
+			for i in range(randi_range(0,3)): # generation de pieces a equilibrer
 				var loot_pos=Vector2i(randi_range(4,8),randi_range(3,7))
 				modifiers.set_cell(loot_pos+room_pos,0,Vector2i(13,0))
-			for i in range(2): # generation de pot a equilibrer
+			for i in range(randi_range(0,2)): # generation de pot a equilibrer
 				var loot_pos=Vector2i(randi_range(4,8),randi_range(3,7))
 				modifiers.set_cell(loot_pos+room_pos,0,Vector2i(14,0))
+			if (randi_range(0,2)==0):
+				modifiers.set_cell(Vector2i(6,5)+room_pos,0,Vector2i(13,1))
 		elif room==2:
-			for i in range(2): # generation de clé a equilibrer
+			for i in range(1): # generation de clé a equilibrer
 				var loot_pos=Vector2i(randi_range(1,11),randi_range(4,6))
 				modifiers.set_cell(loot_pos+room_pos,0,Vector2i(13,3))
-			for i in range(6): # generation de piece a equilibrer
+			for i in range(randi_range(1,5)): # generation de piece a equilibrer
 				var loot_pos=Vector2i(randi_range(1,11),randi_range(4,6))
 				modifiers.set_cell(loot_pos+room_pos,0,Vector2i(13,0))
 		elif room==3:
 			var list_pos=[4,6,8,10]
-			for i in range(2): # generation de pot a equilibrer
+			var rd=randi_range(0,2)
+			for i in range(rd): # generation de pot a equilibrer
 				var loot_pos=Vector2i(list_pos[randi_range(0,3)],4)
 				modifiers.set_cell(loot_pos+room_pos,0,Vector2i(14,0))
-			for i in range(2): # generation de pot a equilibrer
+			for i in range(2-rd): # generation de pot a equilibrer
 				var loot_pos=Vector2i(list_pos[randi_range(0,3)],6)
 				modifiers.set_cell(loot_pos+room_pos,0,Vector2i(14,0))
 	

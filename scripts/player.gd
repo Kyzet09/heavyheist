@@ -15,7 +15,6 @@ var move_vector := Vector2.ZERO
 var collected_coins : int = 0
 var collected_keys : int = 0
 var has_sword : bool = false
-var charge : int = 20 # a changer en fonction du stash
 
 func _ready() -> void:
 	update_backpack()
@@ -40,10 +39,13 @@ func get_tile_under_player():
 	if tile_data:
 		var type = tile_data.get_custom_data("type")
 		if type=="coin":
-			modifiers.set_cell(cell,-1)
 			if collected_coins==0:
 				set_dialog("[font_size=32][i]Voice in you head [/i] \nCOINS! I love coins!")
-			collected_coins+=1
+			if collected_coins<Global.charge:
+				modifiers.set_cell(cell,-1)
+				collected_coins+=1
+			else:
+				set_dialog("[font_size=32][i]Voice in you head [/i] \nMy bag is full of coins")
 			update_backpack()
 			print("coins: ",collected_coins)
 		if type=="key":
@@ -57,7 +59,10 @@ func get_tile_under_player():
 			print("sword: ",has_sword)
 		if type=="pot" and has_sword:
 			modifiers.set_cell(cell,0,Vector2i(15,0))
-			collected_coins+=randi_range(1,3)
+			if collected_coins<Global.charge:
+				collected_coins+=randi_range(1,2)
+			else:
+				set_dialog("[font_size=32][i]Voice in you head [/i] \nMy bag is full of coins")
 			collected_keys+=randi_range(0,1) # 1/2 chance d'avoir une clé
 			keys_label.text=str(collected_keys)
 			update_backpack()
@@ -77,7 +82,7 @@ func get_tile_under_player():
 		if type=="stairs" and tile_data.get_custom_data("sub_type")=="up":
 			game.current_floor+=1
 			var tp_cell=cell+Vector2i(99,-1)
-			if (map.get_cell_source_id(tp_cell) == -1):
+			if (map.get_cell_source_id(tp_cell+Vector2i(0,1)) == -1):
 				game.generate_room(tp_cell,1,2)
 			position = modifiers.map_to_local(tp_cell+Vector2i(3,1))
 
@@ -85,7 +90,7 @@ func get_tile_under_player():
 		if type=="stairs" and tile_data.get_custom_data("sub_type")=="down":
 			game.current_floor-=1
 			var tp_cell=cell-Vector2i(101,1)
-			if (map.get_cell_source_id(tp_cell) == -1):
+			if (map.get_cell_source_id(tp_cell+Vector2i(0,1)) == -1):
 				game.generate_room(tp_cell,0,2)
 			position = modifiers.map_to_local(tp_cell+Vector2i(3,1))
 
@@ -114,6 +119,8 @@ func open_doors():
 					set_dialog("[font_size=32][i]Voice in you head [/i] \nI need a key to open this door...")
 				elif tile_type =="trap":
 					position=game.spawn_pos
+					collected_coins-=5
+					update_backpack()
 
 func set_dialog(text):
 	dialog.text=text
@@ -123,11 +130,11 @@ func set_dialog(text):
 
 
 func update_backpack():
-	print("half capacity" + str(int(charge/2)))
-	if collected_coins < int(charge/2):
+	print("half capacity" + str(int(Global.charge/2)))
+	if collected_coins < int(Global.charge/2):
 		sprite.frame = 0
 		speed = 7500
-	elif collected_coins < charge:
+	elif collected_coins < Global.charge:
 		sprite.frame = 1
 		speed = 5000
 	else:

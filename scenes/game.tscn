@@ -704,7 +704,7 @@ tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAEAAAAAAAIAAAAAAAI
 tile_set = SubResource("TileSet_13h7w")
 
 [node name="modifiers" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAAGAAAAAAAHAAAAAAAGAAsAAAAHAAoAAAA=")
+tile_map_data = PackedByteArray("AAAGAAAAAAAHAAAAAAAGAAsAAAAHAAoAAAALAAUAAAANAAEAAAA=")
 tile_set = SubResource("TileSet_6w7b6")
 
 [node name="joystick_canva" type="CanvasLayer" parent="."]
@@ -742,12 +742,12 @@ metadata/_edit_use_anchors_ = true
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -142.0
+offset_left = -113.0
 offset_bottom = 69.0
 grow_horizontal = 0
 theme_override_font_sizes/font_size = 50
 text = "0"
 
-[node name="Sprite2D" type="Sprite2D" parent="text_canva"]
-position = Vector2(1005, 40)
+[node name="Sprite2D" type="Sprite2D" parent="text_canva/keys_label"]
+position = Vector2(-71, 40)
 texture = ExtResource("5_gicb3")
