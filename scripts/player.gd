@@ -15,6 +15,7 @@ var move_vector := Vector2.ZERO
 var collected_coins : int = 0
 var collected_keys : int = 0
 var has_sword : bool = false
+var lockpicking = Global.lockpicking["lvl"]*4
 
 func _ready() -> void:
 	update_backpack()
@@ -107,16 +108,26 @@ func open_doors():
 			var tile_data = collider.get_cell_tile_data(tile_pos)
 			if tile_data:
 				var tile_type=tile_data.get_custom_data("type")
-				if tile_type =="door" and collected_keys>0:
-					collected_keys-=1
-					keys_label.text=str(collected_keys)
-					if (tile_data.get_custom_data("sub_type")=="top"):
-						game.generate_room(tile_pos+Vector2i(-6,-11))
-					if (tile_data.get_custom_data("sub_type")=="bottom"):
-						game.generate_room(tile_pos+Vector2i(-6,0))
-					collider.set_cell(tile_pos, 0,Vector2i(9,0))  # open door
-				elif tile_type =="door" and collected_keys<=0:
-					set_dialog("[font_size=32][i]Voice in you head [/i] \nI need a key to open this door...")
+				if tile_type =="door":
+					if (randi_range(1,100)<=lockpicking):
+						Global.lockpicking["xp"]+=1
+						if (tile_data.get_custom_data("sub_type")=="top"):
+							game.generate_room(tile_pos+Vector2i(-6,-11))
+						if (tile_data.get_custom_data("sub_type")=="bottom"):
+							game.generate_room(tile_pos+Vector2i(-6,0))
+						collider.set_cell(tile_pos, 0,Vector2i(9,0))  # open door
+						set_dialog("[font_size=32][i]Voice in you head [/i] \nThat's what we call lockpicking")
+					if collected_keys>0:
+						collected_keys-=1
+						keys_label.text=str(collected_keys)
+						Global.lockpicking["xp"]+=1
+						if (tile_data.get_custom_data("sub_type")=="top"):
+							game.generate_room(tile_pos+Vector2i(-6,-11))
+						if (tile_data.get_custom_data("sub_type")=="bottom"):
+							game.generate_room(tile_pos+Vector2i(-6,0))
+						collider.set_cell(tile_pos, 0,Vector2i(9,0))  # open door
+					elif collected_keys<=0:
+						set_dialog("[font_size=32][i]Voice in you head [/i] \nI need a key to open this door...")
 				elif tile_type =="trap":
 					position=game.spawn_pos
 					collected_coins-=5

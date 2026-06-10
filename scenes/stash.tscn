@@ -52,5 +52,30 @@ offset_right = 347.0
 offset_bottom = 50.0
 text = "Level up (10)"
 
+[node name="lockpicking_label" type="Label" parent="."]
+offset_left = 71.0
+offset_top = 485.0
+offset_right = 255.0
+offset_bottom = 550.0
+theme_override_font_sizes/font_size = 30
+text = "Lockpicking Lvl"
+
+[node name="lockpicking_lvl" type="Label" parent="lockpicking_label"]
+layout_mode = 0
+offset_left = 253.0
+offset_top = -1.0
+offset_right = 336.0
+offset_bottom = 41.0
+theme_override_font_sizes/font_size = 30
+text = "0"
+
+[node name="lockpicking_xp" type="Label" parent="lockpicking_label"]
+layout_mode = 0
+offset_left = 299.0
+offset_right = 413.0
+offset_bottom = 61.0
+theme_override_font_sizes/font_size = 30
+text = "0"
+
 [connection signal="pressed" from="new_game" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="charge_label/buy_charge" to="." method="_on_buy_charge_pressed"]
