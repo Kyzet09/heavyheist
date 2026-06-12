@@ -8,6 +8,7 @@ var total_coins : int = 0
 var charge = 20
 var bonus_price ={"charge":10}
 var lockpicking={"lvl":0,"xp":0,"xp_to_lvlup":20}
+var longest_run=""
 
 
 func save():
@@ -15,7 +16,8 @@ func save():
 		"coins": total_coins,
 		"charge": charge,
 		"bonus_price": bonus_price,
-		"lockpicking":lockpicking
+		"lockpicking":lockpicking,
+		"longest_run":longest_run
 	}
 
 	var fichier = FileAccess.open("user://save.json", FileAccess.WRITE)

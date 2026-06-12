@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://cqy5bmsy6xv02"]
+[gd_scene load_steps=5 format=3 uid="uid://cqy5bmsy6xv02"]
 
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_bouyi"]
+[ext_resource type="Texture2D" uid="uid://ddb72puvspc1q" path="res://assets/aveo-logo.png" id="2_aqdpa"]
 
 [sub_resource type="FontFile" id="FontFile_33lsb"]
 cache/0/16/0/ascent = 0.0
@@ -310,21 +311,16 @@ script = ExtResource("1_bouyi")
 offset_left = 400.0
 offset_top = 753.0
 offset_right = 800.0
-offset_bottom = 1272.0
+offset_bottom = 833.0
 theme = SubResource("Theme_40vgo")
 
-[node name="title" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-text = "Aveo"
-horizontal_alignment = 1
+[node name="Sprite2D" type="Sprite2D" parent="VBoxContainer"]
+position = Vector2(304, -118)
+scale = Vector2(6, 6)
+texture = ExtResource("2_aqdpa")
 
 [node name="Button_play" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Play"
 
-[node name="Button_skip_tuto" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-text = "Skip Tutorial"
-
 [connection signal="pressed" from="VBoxContainer/Button_play" to="." method="_on_button_play_pressed"]
-[connection signal="pressed" from="VBoxContainer/Button_skip_tuto" to="." method="_on_button_skip_tuto_pressed"]

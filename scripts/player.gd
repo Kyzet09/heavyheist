@@ -131,6 +131,8 @@ func open_doors():
 				elif tile_type =="trap":
 					position=game.spawn_pos
 					collected_coins-=5
+					if (collected_coins<0):
+						collected_coins=0
 					update_backpack()
 
 func set_dialog(text):

@@ -7,15 +7,15 @@
 script = ExtResource("1_alfyd")
 
 [node name="coins" type="Label" parent="."]
-offset_left = 983.0
+offset_left = 993.0
 offset_top = -2.0
 offset_right = 1199.0
 offset_bottom = 67.0
 theme_override_font_sizes/font_size = 50
 text = "0"
 
-[node name="coin_sprite" type="Sprite2D" parent="."]
-position = Vector2(952, 34)
+[node name="coin_sprite" type="Sprite2D" parent="coins"]
+position = Vector2(-31, 36)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_bidn4")
 
@@ -26,6 +26,14 @@ offset_right = 1167.0
 offset_bottom = 1956.0
 theme_override_font_sizes/font_size = 40
 text = "New game"
+
+[node name="title" type="Label" parent="."]
+offset_left = 500.0
+offset_top = 150.0
+offset_right = 650.0
+offset_bottom = 258.0
+theme_override_font_sizes/font_size = 50
+text = "Stash"
 
 [node name="charge_label" type="Label" parent="."]
 offset_left = 113.0
@@ -63,19 +71,22 @@ text = "Lockpicking Lvl"
 [node name="lockpicking_lvl" type="Label" parent="lockpicking_label"]
 layout_mode = 0
 offset_left = 253.0
-offset_top = -1.0
-offset_right = 336.0
-offset_bottom = 41.0
+offset_right = 281.0
+offset_bottom = 42.0
 theme_override_font_sizes/font_size = 30
 text = "0"
 
-[node name="lockpicking_xp" type="Label" parent="lockpicking_label"]
-layout_mode = 0
-offset_left = 299.0
-offset_right = 413.0
-offset_bottom = 61.0
-theme_override_font_sizes/font_size = 30
-text = "0"
+[node name="ProgressBar" type="ProgressBar" parent="lockpicking_label"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.446
+anchor_bottom = 0.446
+offset_left = 306.0
+offset_top = -18.99
+offset_right = 831.0
+offset_bottom = 10.01
+max_value = 20.0
+step = 1.0
 
 [connection signal="pressed" from="new_game" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="charge_label/buy_charge" to="." method="_on_buy_charge_pressed"]
